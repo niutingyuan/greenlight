@@ -69,6 +69,9 @@ func (app *application) server() error {
 		return err
 	}
 
+	app.logger.Info("waiting for background tasks")
+	app.wg.Wait()
+
 	// At this point we know that the graceful shutdown completed successfully and we
 	// log a message to indicate that.
 	app.logger.Info("shutdown complete")

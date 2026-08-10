@@ -131,3 +131,17 @@ func (app *application) readJSON(w http.ResponseWriter, r *http.Request, dst any
 
 	return nil
 }
+
+func (app *application) background(fn func()) {
+	app.wg.Go(func() {
+		defer func() {
+			pv := recover()
+			if pv != nil {
+				app.logger.Error(fmt.Sprintf("%v", pv))
+			}
+		}()
+
+		fn()
+
+	})
+}
