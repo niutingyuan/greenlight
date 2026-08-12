@@ -142,7 +142,7 @@ func (p *password) Matches(plaintextPassword string) (bool, error) {
 	if err != nil {
 		switch {
 		case errors.Is(err, bcrypt.ErrMismatchedHashAndPassword):
-			return false, err
+			return false, nil
 		default:
 			return false, err
 		}
